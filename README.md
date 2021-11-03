@@ -8,6 +8,8 @@ Vehicle Image Creator - FIVEM
 - start screenshot-basic
 - start vImageCreator
 - Setup a Webhook in config (this is where the images will be saved)
+- Choose Vehicle table ( in example we use vehicles table from Mysql )
+- ` you can put any vehicle table name as long as there is a model column as a name string not hashkey`
 
 # Permission Usage
 - Upon restarting the script or starting you need to type the /getperms command
