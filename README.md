@@ -48,14 +48,16 @@ Config.owners = {
 - You can use the Global State Variable or you can use the Exports
 ```
 # Exports
-local img = exports.vImageCreator:GetModelImage('nissanskyline')
+local hash = tostring(GetHashKey('nissanskyline'))
+local img = exports.vImageCreator:GetModelImage(hash )
 print(img)
 -- return
 -- url of image or the default image if this model is not yet proccessed
 ```
 # Global State
 ```
-local img = GlobalState.VehicleImages['nissanskyline']
+local hash = tostring(GetHashKey('nissanskyline'))
+local img = GlobalState.VehicleImages[hash]
 print(img)
 --return
 -- url of image or the default image if model is not yet proccessed
