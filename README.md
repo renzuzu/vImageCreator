@@ -56,3 +56,10 @@ print(img)
 --return
 -- url of image or the default image if model is not yet proccessed
 ```
+
+# Guide
+- /startscreenshot to start or stop generating
+- /resetscreenshot to reset the image generation
+
+# Demo
+https://youtu.be/gQ8p1NBnhZk
