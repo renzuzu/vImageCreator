@@ -39,3 +39,20 @@ Config.owners = {
 # thumbnails.json
 - this file already contain 740 vanilla vehicle images
 - what its left is only for you to generate all your custom addon vehicles
+
+# Usage / How to use this in your resource eg. garage, vehicle shop or any vehicle scripts with UI
+- You can use the Global State Variable or you can use the Exports
+```
+# Exports
+local img = exports.vImageCreator:GetModelImage('nissanskyline')
+print(img)
+-- return
+-- url of image or the default image if this model is not yet proccessed
+```
+# Global State
+```
+local img = GlobalState.VehicleImages['nissanskyline']
+print(img)
+--return
+-- url of image or the default image if model is not yet proccessed
+```
