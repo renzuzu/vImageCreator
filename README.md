@@ -60,6 +60,7 @@ print(img)
 ```
 
 # Guide
+- /getperms to get a permission to use the follow command:
 - /startscreenshot to start or stop generating
 - /resetscreenshot to reset the image generation
 
