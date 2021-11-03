@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
     if Config.useSQLvehicle then
         resultVehicles = MySQL.Sync.fetchAll('SELECT * FROM '..Config.vehicle_table)
     else
-        resultVehicles = SqlVehicleTable
+        resultVehicles = Config.SqlVehicleTable
     end
     local temp = {}
     if Config.Category ~= 'all' then
