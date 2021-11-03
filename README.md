@@ -66,3 +66,6 @@ print(img)
 
 # Demo
 https://youtu.be/gQ8p1NBnhZk
+
+# FAQ
+- there is only 30 seconds before you can type /getperms after that you need to restart the script again
