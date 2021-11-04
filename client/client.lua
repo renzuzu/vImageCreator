@@ -335,12 +335,8 @@ Citizen.CreateThread(function()
             local count = 0
             if not HasModelLoaded(hash) then
                 RequestModel(hash)
-                while not HasModelLoaded(hash) and count < 1111 do
-                    count = count + 10
+                while not HasModelLoaded(hash) do
                     Citizen.Wait(0)
-                    if count > 9999 then
-                    return
-                    end
                 end
                 loading = true
             end
