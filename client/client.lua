@@ -184,12 +184,12 @@ function ClearEverything()
     ClearAreaLeaveVehicleHealth(maincoords.x,maincoords.y,maincoords.z, 5000.0, false, false, false, false)
 end 
 
-function StartScreenShoting()
+function StartScreenShoting(list)
     local ped = PlayerPedId()
     
-    print(#generatelist,'total vehicles')
-    for i = 1, #generatelist do
-       local v = generatelist[i]
+    print(#list,'total vehicles')
+    for i = 1, #list do
+       local v = list[i]
        local hashmodel = v
        RequestModel(hashmodel)
        while not HasModelLoaded(hashmodel) do Wait(0) end 
@@ -245,13 +245,23 @@ function SetCamera(veh)
 
 end 
 
-Citizen.CreateThread(function()
-    Wait(500)
+local exported = false 
+
+function GenVehicleImages(list)
     DisplayHud(false)
     DisplayRadar(false)
     CreateLocation()
     SetEntityAlpha(PlayerPedId(),0)
     FreezeEntityPosition(PlayerPedId(),true)
-    StartScreenShoting()
-    
-end)
+    StartScreenShoting(list)
+end 
+
+exports("GenVehicleImages",function(...)
+    exported = true 
+    GenVehicleImages(...)
+end) --exports["vImageCreator"]:GenVehicleImages(list)
+
+Command = setmetatable({},{__newindex=function(t,k,fn) RegisterCommand(k,function(source, args, raw) fn(table.unpack(args)) end) return end })
+Command["startgen"] = function()
+    GenVehicleImages(generatelist)
+end
