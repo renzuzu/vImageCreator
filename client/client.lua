@@ -185,6 +185,22 @@ function ClearEverything()
 end 
 
 function StartScreenShoting(list)
+    local started = true 
+    CreateThread(function()
+        --lock time 
+        while started do Wait(100)
+            NetworkOverrideClockTime(22, 00, 00)
+        end 
+    end)
+
+    CreateThread(function()
+        --spot light 
+        
+        while started do Wait(0)
+            DrawLightWithRange(maincoords.x-4.0, maincoords.y-3.0, maincoords.z+ 0.3, 255,255,255, 40.0, 15.0)
+            DrawSpotLight(maincoords.x-4.0, maincoords.y+5.0, maincoords.z, maincoords, 255, 255, 255, 20.0, 1.0, 1.0, 20.0, 0.95)
+        end 
+    end)
     local ped = PlayerPedId()
     
     print(#list,'total vehicles')
@@ -212,23 +228,10 @@ function StartScreenShoting(list)
     Wait(200)
     FreezeEntityPosition(PlayerPedId(),false)
     SetEntityAlpha(PlayerPedId(),255)
+    started = false 
 end
 
-CreateThread(function()
-    --lock time 
-    while true do Wait(100)
-        NetworkOverrideClockTime(22, 00, 00)
-    end 
-end)
 
-CreateThread(function()
-    --spot light 
-    
-    while true do Wait(0)
-        DrawLightWithRange(maincoords.x-4.0, maincoords.y-3.0, maincoords.z+ 0.3, 255,255,255, 40.0, 15.0)
-        DrawSpotLight(maincoords.x-4.0, maincoords.y+5.0, maincoords.z, maincoords, 255, 255, 255, 20.0, 1.0, 1.0, 20.0, 0.95)
-    end 
-end)
 
 function SetCamera(veh)
     local model = GetEntityModel(veh)
