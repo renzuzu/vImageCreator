@@ -1,78 +1,38 @@
-# vImageCreator
-Vehicle Image Creator - FIVEM
-![image](https://user-images.githubusercontent.com/82306584/140085801-461d4b74-e1b9-4f3c-9828-82720a21555c.png)
+Continuing the discussion from [[UTILS] vImageCreator - Vehicle Image Creator](https://forum.cfx.re/t/utils-vimagecreator-vehicle-image-creator/4775850):
 
+This is a rewrite version vImageCreator of renzu
+Which is save as base64 thumbnails.json.
+Only Support generate under 1024x768 resolution.(otherwise you will get the error message: Reliable network event size overflow) 
+It is for developer/local only because images from 'thumbnails.json' will begin rebuild when you start/restart this script.
 
-# Description
-- Automatically Generate a Image for All your Vanilla GTA Vehicles or Custom Addon Vehicles
+Github: https://github.com/negbook/vImageCreator
 
-# Installation
-- start screenshot-basic
-- start vImageCreator
-- Setup a Webhook in config (this is where the images will be saved)
-- Choose Vehicle table ( in example we use vehicles table from Mysql )
-- ` you can put any vehicle table name as long as there is a model column as a name string not hashkey`
+## To Use
+1. Set your vehiclelist in generatelist.lua
+2. Start/Restart the script(before it , make sure turn your resolution to under 1024x768), type /startgen
+3. Open thumbnails.json in your texteditor / Copy to your other scripts directly.
 
-# Permission Usage
-- Upon restarting the script or starting you need to type the /getperms command
-- Permission is configurable via config using your identifiers
-- When permission is allowed you can use the following command:
-- /startscreenshot (iterate all your vehicle and start generating images) (this may take a while this will screenshot your vehicle one by one)
-- /resetscreenshot (reset the index number to 1) (important if you want to start over again)
+## To Load in Client
 
-# Config
-- Saving logic uses Json Saveresourcefil or resource KVP
+In example resource: 'someResource'
+Put these in fxmanifest.lua
 ```
-Config = {}
-Config.DiscordWebHook = 'INSERT WEBHOOK'
-Config.save = 'json' -- kvp, json
-Config.vehicle_table = 'vehicles' -- vehicle table must have model column (name not hash)
-Config.useSQLvehicle = true -- use mysql async to fetch vehicle table else SqlVehicleTable will use
-Config.SqlVehicleTable = QBCore and QBCore.Shared and QBCore.Shared.Vehicles and QBCore.Shared.Vehicles or {} -- example qbcore shared vehicle
-
--- Custom Category
-Config.Category = 'all' -- select a custom category | set this to 'all' if you want to Screenshot all vehicle categories
-
--- Permission
-Config.owners = {
-    ['license:df845523fc29c5159ece2179359f22a741c2a2ca9a'] = true,
-    --add more here
+files {
+"somewhere/thumbnails.json"
 }
 ```
 
-# thumbnails.json
-- this file already contain 740 vanilla vehicle images
-- what its left is only for you to generate all your custom addon vehicles
-
-# Usage / How to use this in your resource eg. garage, vehicle shop or any vehicle scripts with UI
-- You can use the Global State Variable or you can use the Exports
 ```
-# Exports
-local hash = tostring(GetHashKey('nissanskyline'))
-local img = exports.vImageCreator:GetModelImage(hash )
-print(img)
--- return
--- url of image or the default image if this model is not yet proccessed
-```
-# Global State
-```
-local hash = tostring(GetHashKey('nissanskyline'))
-local img = GlobalState.VehicleImages[hash]
-print(img)
---return
--- url of image or the default image if model is not yet proccessed
+local cars = json.decode(LoadResourceFile('someResource', 'somewhere/thumbnails.json') or '[]') or {}
+for name, base64 in pairs(cars) do 
+    print(name,base64)
+end 
 ```
 
-# Guide
-- /getperms to get a permission to use the follow command:
-- /startscreenshot to start or stop generating
-- /resetscreenshot to reset the image generation
+## To texture
+Create .ytd and move those jpeg into there 
 
-# Demo
-https://youtu.be/gQ8p1NBnhZk
-
-# FAQ
-- there is only 30 seconds before you can type /getperms after that you need to restart the script again
-
-# Dependency
-- screenshot-basic
+## exports to startgen quickly from other resources
+```
+exports["vImageCreator"]:GenVehicleImages(yourlist)
+```
